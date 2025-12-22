@@ -8,9 +8,6 @@ py.mixer.init()
 
 music_is_paused = False
 
-
-
-
 music_ac = [
   "music/ac/12AM.mp3",
   "music/ac/1AM.mp3",
@@ -38,6 +35,7 @@ music_ac = [
   "music/ac/11PM.mp3"
 ]
 
+#bg="#46f274"
 
 def play_sound():
     global music_is_paused
@@ -72,13 +70,13 @@ def update_current_track():
 
 #Screen Setup
 root = tk.Tk()
+root.iconbitmap("images/icon.ico")
 root.title("AC Music Player")
 root.resizable(False, False)
 root.geometry("300x150")
 
 
 #Buttons
-
 #0 for ac, 1 for nl, 2 for nh
 game_selected = tk.IntVar()
 game_selected.set(0)
@@ -89,8 +87,8 @@ Radiobutton(root, text='Play \"Animal Crossing\" Sound Track', variable=game_sel
 button_frame = tk.Frame(root)
 button_frame.grid(row=2, column=0, pady=5)
 
-button_play = tk.Button(button_frame, text="Start", command=play_sound)
-button_stop = tk.Button(button_frame, text="Stop", command=stop_sound)
+button_play = tk.Button(button_frame, text="Unpause", command=play_sound)
+button_stop = tk.Button(button_frame, text="Pause", command=stop_sound)
 
 button_play.pack(side='left', padx=(0,5))
 button_stop.pack(side='left')
