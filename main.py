@@ -35,7 +35,33 @@ music_ac = [
   "music/ac/11PM.mp3"
 ]
 
-#bg="#46f274"
+music_nl = [
+  "music/nl/12 AM.mp3",
+  "music/nl/1 AM.mp3",
+  "music/nl/2 AM.mp3",
+  "music/nl/3 AM.mp3",
+  "music/nl/4 AM.mp3",
+  "music/nl/5 AM.mp3",
+  "music/nl/6 AM.mp3",
+  "music/nl/7 AM.mp3",
+  "music/nl/8 AM.mp3",
+  "music/nl/9 AM.mp3",
+  "music/nl/10 AM.mp3",
+  "music/nl/11 AM.mp3",
+  "music/nl/12 PM.mp3",
+  "music/nl/1 PM.mp3",
+  "music/nl/2 PM.mp3",
+  "music/nl/3 PM.mp3",
+  "music/nl/4 PM.mp3",
+  "music/nl/5 PM.mp3",
+  "music/nl/6 PM.mp3",
+  "music/nl/7 PM.mp3",
+  "music/nl/8 PM.mp3",
+  "music/nl/9 PM.mp3",
+  "music/nl/10 PM.mp3",
+  "music/nl/11 PM.mp3"
+]
+
 
 def play_sound():
     global music_is_paused
@@ -46,7 +72,10 @@ def stop_sound():
     global music_is_paused
     py.mixer.music.pause()
     music_is_paused = True
-    
+
+def reset_music():
+    py.mixer.music.stop()
+
 def load_music(file):
     py.mixer.music.load(file)
     print("Loaded: " + str(file))
@@ -63,35 +92,33 @@ def update_current_track():
         if game_selected.get() == 0:
             load_music(music_ac[nowtime.hour])
         elif game_selected.get() == 1:
-            load_music(music_ac[nowtime.hour])
+            load_music(music_nl[nowtime.hour])
         py.mixer.music.play()
 
     root.after(1000,update_current_track)
 
-#Screen Setup
 root = tk.Tk()
 root.iconbitmap("images/icon.ico")
 root.title("AC Music Player")
 root.resizable(False, False)
 root.geometry("300x150")
 
-
-#Buttons
-#0 for ac, 1 for nl, 2 for nh
 game_selected = tk.IntVar()
 game_selected.set(0)
 
 Radiobutton(root, text='Play \"Animal Crossing\" Sound Track', variable=game_selected, value=0).grid(row=0,column=0,sticky='w')
-#Radiobutton(root, text='Play \"Animal Crossing New Leaf\" Sound Track', variable=game_selected, value=1).grid(row=1,column=0,sticky='w')
+Radiobutton(root, text='Play \"Animal Crossing New Leaf\" Sound Track', variable=game_selected, value=1).grid(row=1,column=0,sticky='w')
 
 button_frame = tk.Frame(root)
 button_frame.grid(row=2, column=0, pady=5)
 
 button_play = tk.Button(button_frame, text="Unpause", command=play_sound)
 button_stop = tk.Button(button_frame, text="Pause", command=stop_sound)
+button_reset = tk.Button(button_frame, text="Reset", command=reset_music)
 
 button_play.pack(side='left', padx=(0,5))
 button_stop.pack(side='left')
+button_reset.pack(side='left')
 
 slider = tk.Scale(root, from_=0, to=100, orient=tk.HORIZONTAL, length=275)
 slider.grid(row=3, column=0, columnspan=2, pady=10, padx=10, sticky='w')
